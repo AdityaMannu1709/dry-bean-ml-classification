@@ -6,7 +6,7 @@ Dry beans of seven varieties look alike to the eye, and sorting them by hand is 
 
 ## b. Dataset description
 
-- **Source:** Dry Bean Dataset, UCI Machine Learning Repository (Koklu and Ozkan, 2020).
+- **Source:** Dry Bean Dataset, UCI Machine Learning Repository (Koklu and Ozkan, 2020): https://archive.ics.uci.edu/dataset/602/dry+bean+dataset.
 - **Task:** Multi-class classification with 7 classes: BARBUNYA, BOMBAY, CALI, DERMASON, HOROZ, SEKER, SIRA.
 - **Instances:** 13,611 raw rows. 68 exact duplicates were removed, leaving 13,543.
 - **Features:** 16, all numeric and with no missing values: Area, Perimeter, MajorAxisLength, MinorAxisLength, AspectRation, Eccentricity, ConvexArea, EquivDiameter, Extent, Solidity, roundness, Compactness, ShapeFactor1, ShapeFactor2, ShapeFactor3, ShapeFactor4.
@@ -17,9 +17,9 @@ Dry beans of seven varieties look alike to the eye, and sorting them by hand is 
 
 ## c. GitHub repository link
 
-TODO: paste your repository URL here, for example `https://github.com/<username>/<repo>`
+Repository: https://github.com/AdityaMannu1709/dry-bean-ml-classification/tree/main
 
-Live Streamlit app: TODO: paste your deployed app URL here.
+Live Streamlit app: https://dry-bean-ml-classification-apwtblb4d2ckjcbhtqtcap.streamlit.app/
 
 ### Repository structure
 
@@ -30,6 +30,10 @@ Live Streamlit app: TODO: paste your deployed app URL here.
 ├── requirements.txt
 ├── README.md
 ├── test_data.csv           Held-out test data (features + Class)
+├── data/raw/DryBeanDataset/
+│   ├── Dry_Bean_Dataset.xlsx
+│   ├── Dry_Bean_Dataset.arff
+│   └── Dry_Bean_Dataset.txt
 └── model/
     ├── logistic_regression.joblib
     ├── decision_tree.joblib
@@ -48,7 +52,7 @@ python train.py          # optional, models are already saved in model/
 streamlit run app.py
 ```
 
-Note: `train.py` reads the raw UCI file from `data/raw/DryBeanDataset/Dry_Bean_Dataset.xlsx`, which is not committed. Download it from the UCI repository to rerun training.
+`train.py` reads `data/raw/DryBeanDataset/Dry_Bean_Dataset.xlsx` to reproduce the training split and saved artifacts. The raw dataset is included in the repository.
 
 ## d. Models used
 
@@ -77,10 +81,12 @@ Hyperparameters: Logistic Regression `max_iter=2000`; Decision Tree `max_depth=1
 
 ## Streamlit app features
 
-- Upload a test CSV (the 16 features plus the `Class` column).
-- Choose any of the five models from a dropdown.
-- View Accuracy, AUC, Precision, Recall, F1 and MCC.
-- View the confusion matrix and the classification report.
-- See a side-by-side comparison of all five models on the uploaded data.
+- Upload a labeled test CSV containing the 16 features and the `Class` target; the app validates required columns and bean labels before evaluating.
+- Review the uploaded file name, row and feature counts, first 10 rows, and class distribution.
+- Download the provided sample test data from the sidebar.
+- Choose **Single model** to select one classifier and view its Accuracy, AUC, Precision, Recall, F1, MCC, confusion matrix, and classification report.
+- Choose **Compare models** to select between two and five classifiers and compare their metrics on the same uploaded rows.
+- Review automatically generated comparison findings, including the leaders for each available metric.
+- Download the selected-model classification report, confusion matrix, and model-comparison metrics as CSV files.
 
-The app loads the saved models from `model/` and does not retrain on uploaded data.
+The app loads the saved models from `model/` and does not retrain on uploaded data. AUC is shown as unavailable when the uploaded test data does not contain every bean variety.

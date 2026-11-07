@@ -8,7 +8,7 @@ __pycache__/
 
 # Data folder to be ignored 
 data/drybean.zip
-Question/
+solution/
 
 # Ignore Json Files
 *.json
